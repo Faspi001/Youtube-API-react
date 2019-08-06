@@ -1,34 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Paper, TextField } from "@material-ui/core";
 
-class SearchBar extends React.Component {
-  state = {
-    searchTerm: ""
+const SearchBar = props => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const handleChange = event => {
+    setSearchTerm(event.target.value);
   };
-  handleChange = event => {
-    this.setState({
-      searchTerm: event.target.value
-    });
-  };
+  const handleSubmit = event => {
+    setSearchTerm(searchTerm);
 
-  handleSubmit = event => {
-    const { searchTerm } = this.state;
-    const { onFormSubmit } = this.props;
-
+    const { onFormSubmit } = props;
     onFormSubmit(searchTerm);
-
     event.preventDefault();
   };
-  render() {
-    return (
-      <Paper elevation={6} style={{ padding: "25px" }}>
-        <form onSubmit={this.handleSubmit}>
-          <TextField fullWidth label="Videotitel suchen..." onChange={this.handleChange} />
-        </form>
-      </Paper>
-    );
-  }
-}
+
+  return (
+    <Paper elevation={6} style={{ padding: "25px" }}>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          fullWidth
+          label="Videotitel suchen..."
+          onChange={handleChange}
+        />
+      </form>
+    </Paper>
+  );
+};
 
 export default SearchBar;
